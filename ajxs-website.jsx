@@ -4,45 +4,45 @@ import { Search, MapPin, Phone, Mail, MessageCircle, Star, Clock, ChevronDown, M
 
 // Product Data
 const PRODUCTS = [
-  { "id": "1", "name": "Mug Printing", "category": "GIFT", "image": "./img/gift/mug.jpg" },
-  { "id": "2", "name": "Customized Wallet", "category": "GIFT", "image": "./img/gift/Wallet.png" },
-  { "id": "3", "name": "Office Stationery", "category": "STATIONERY", "image": "./img/stationery/Office_Stationery.png" },
-  { "id": "4", "name": "COMBO OFFER(2 in 1)", "category": "COMBO", "image": null },
-  { "id": "5", "name": "PhotoCopy", "category": "XEROX", "image": "./img/xerox/photocopy.png" },
-  { "id": "6", "name": "Customized Pillow", "category": "GIFT", "image": "./img/gift/pillow.png" },
-  { "id": "7", "name": "Flex Printing", "category": "PRINT", "image": null },
-  { "id": "8", "name": "School Stationery", "category": "STATIONERY", "image": "./img/stationery/school_stationery.png" },
-  { "id": "9", "name": "COMBO OFFER(3 in 1)", "category": "COMBO", "image": null },
-  { "id": "10", "name": "Lamination", "category": "XEROX", "image": "./img/xerox/Lamination.png" },
+  { "id": "1", "name": "Mug Printing", "category": "GIFT", "image": "img/gift/mug.jpg" },
+  { "id": "2", "name": "Customized Wallet", "category": "GIFT", "image": "img/gift/Wallet.png" },
+  { "id": "3", "name": "Office Stationery", "category": "STATIONERY", "image": "img/stationery/Office_Stationery.png" },
+  { "id": "4", "name": "COMBO OFFER(2 in 1)", "category": "COMBO", "image": "img/Combo/combo2.png" },
+  { "id": "5", "name": "PhotoCopy", "category": "XEROX", "image": "img/xerox/photocopy.png" },
+  { "id": "6", "name": "Customized Pillow", "category": "GIFT", "image": "img/gift/pillow.png" },
+  { "id": "7", "name": "Flex Printing", "category": "PRINT", "image": "img/print/flex.jpg" },
+  { "id": "8", "name": "School Stationery", "category": "STATIONERY", "image": "img/stationery/school_stationery.png" },
+  { "id": "9", "name": "COMBO OFFER(3 in 1)", "category": "COMBO", "image": "img/Combo/combo3.png" },
+  { "id": "10", "name": "Lamination", "category": "XEROX", "image": "img/xerox/Lamination.png" },
   { "id": "11", "name": "Customized T-Shirt", "category": "GIFT", "image": null },
-  { "id": "12", "name": "Black Book", "category": "PRINT", "image": null },
-  { "id": "13", "name": "Autocad Plotting", "category": "XEROX", "image": "./img/xerox/autocad.png" },
+  { "id": "12", "name": "Black Book", "category": "PRINT", "image": "img/print/blackbook.png" },
+  { "id": "13", "name": "Autocad Plotting", "category": "XEROX", "image": "img/xerox/autocad.png" },
   { "id": "14", "name": "Customized KeyChain", "category": "GIFT", "image": null },
-  { "id": "15", "name": "Visiting Card", "category": "PRINT", "image": null },
-  { "id": "16", "name": "COMBO OFFER(4 in 1)", "category": "COMBO", "image": null },
+  { "id": "15", "name": "Visiting Card", "category": "PRINT", "image": "img/print/visiting.png" },
+  { "id": "16", "name": "COMBO OFFER(4 in 1)", "category": "COMBO", "image": "img/Combo/combo4.png" },
   { "id": "17", "name": "Spiral binding", "category": "XEROX", "image": "img/xerox/Spiral.png" },
   { "id": "18", "name": "Customized Cover", "category": "GIFT", "image": null },
-  { "id": "19", "name": "Smart(PVC) Card", "category": "PRINT", "image": null },
+  { "id": "19", "name": "Smart(PVC) Card", "category": "PRINT", "image": "img/print/pvc.png" },
   { "id": "20", "name": "DTP Service", "category": "XEROX", "image": "img/xerox/dtp.png" },
   { "id": "21", "name": "Customized bottle", "category": "GIFT", "image": null },
-  { "id": "22", "name": "Lace Printing", "category": "PRINT", "image": null },
+  { "id": "22", "name": "Lace Printing", "category": "PRINT", "image": "img/print/lace.png" },
   { "id": "23", "name": "Customized Ring", "category": "GIFT", "image": null },
-  { "id": "24", "name": "Rubber Stamp", "category": "PRINT", "image": null },
+  { "id": "24", "name": "Rubber Stamp", "category": "PRINT", "image": "img/print/stamp.png" },
   { "id": "25", "name": "Customized Frame", "category": "GIFT", "image": null },
-  { "id": "26", "name": "Offset Printing", "category": "PRINT", "image": null },
+  { "id": "26", "name": "Offset Printing", "category": "PRINT", "image": "img/print/offset.png" },
   { "id": "27", "name": "Customized Name Plate", "category": "GIFT", "image": null },
-  { "id": "28", "name": "Bill Book Printing", "category": "PRINT", "image": null },
+  { "id": "28", "name": "Bill Book Printing", "category": "PRINT", "image": "img/print/billbook.png" },
   { "id": "29", "name": "Customized Bracelet Women", "category": "GIFT", "image": null },
-  { "id": "30", "name": "Letter Head Printing", "category": "PRINT", "image": null },
+  { "id": "30", "name": "Letter Head Printing", "category": "PRINT", "image": "img/print/letterhead.png" },
   { "id": "31", "name": "Customized Bracelet Men", "category": "GIFT", "image": null },
-  { "id": "32", "name": "Pamphlet Printing", "category": "PRINT", "image": null },
+  { "id": "32", "name": "Pamphlet Printing", "category": "PRINT", "image": "img/print/pamphlet.png" },
   { "id": "33", "name": "Customized Pen", "category": "GIFT", "image": null },
-  { "id": "34", "name": "Vinyl Printing", "category": "PRINT", "image": null },
+  { "id": "34", "name": "Vinyl Printing", "category": "PRINT", "image": "img/print/vinyl.png" },
   { "id": "35", "name": "Customized Engraved", "category": "GIFT", "image": null },
-  { "id": "36", "name": "Wedding Card Printing", "category": "PRINT", "image": null },
-  { "id": "37", "name": "Certificate Printing", "category": "PRINT", "image": null },
-  { "id": "38", "name": "Invitation Card Printing", "category": "PRINT", "image": null },
-  { "id": "39", "name": "Calendar Printing", "category": "PRINT", "image": null },
+  { "id": "36", "name": "Wedding Card Printing", "category": "PRINT", "image": "img/print/wedding.png" },
+  { "id": "37", "name": "Certificate Printing", "category": "PRINT", "image": "img/print/certificate.png" },
+  { "id": "38", "name": "Invitation Card Printing", "category": "PRINT", "image": "img/print/invitation.png" },
+  { "id": "39", "name": "Calendar Printing", "category": "PRINT", "image": "img/print/calender.png" },
   { "id": "40", "name": "Customized Clock", "category": "GIFT", "image": null },
   { "id": "41", "name": "Customized Passport Cover", "category": "GIFT", "image": null },
   { "id": "42", "name": "Customized Pen Stand", "category": "GIFT", "image": null },
@@ -52,6 +52,8 @@ const PRODUCTS = [
   { "id": "46", "name": "Customized Diary", "category": "GIFT", "image": null },
   { "id": "47", "name": "Customized Bag Tag", "category": "GIFT", "image": null },
   { "id": "48", "name": "Customized Bedsheet", "category": "GIFT", "image": null },
+  { "id": "49", "name": "Standees", "category": "PRINT", "image": "img/print/standee.png" },
+  { "id": "50", "name": "Banner", "category": "PRINT", "image": "img/print/banner.png" },
 ];
 
 // Spotlight Offers
@@ -206,7 +208,7 @@ const ProductCard = ({ product }) => {
 
   const handleWhatsApp = () => {
     const message = `Hi AJXS, I'm interested in the ${product.name} I saw on your website.`;
-    const whatsappUrl = `https://wa.me/919876543210?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/917738405495?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
@@ -295,7 +297,7 @@ const SpotlightCard = ({ offer }) => {
             whileTap={{ scale: 0.95 }}
             onClick={() => {
               const message = `Hi AJXS, I'm interested in: ${offer.title}. Can you provide more details?`;
-              window.open(`https://wa.me/919876543210?text=${encodeURIComponent(message)}`, '_blank');
+              window.open(`https://wa.me/917738405495?text=${encodeURIComponent(message)}`, '_blank');
             }}
             className="w-full bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition-all"
           >
