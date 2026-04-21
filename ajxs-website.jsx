@@ -2,58 +2,125 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, MapPin, Phone, Mail, MessageCircle, Star, Clock, ChevronDown, Menu, X, Youtube, Instagram } from 'lucide-react';
 
+// ESM Image Imports - Gift Category
+import mugImage from './img/gift/mug.jpg';
+import walletImage from './img/gift/Wallet.png';
+import pillarImage from './img/gift/pillow.png';
+import tshirtImage from './img/gift/tshirt.png';
+import keychainImage from './img/gift/keychain.png';
+import bottleImage from './img/gift/bottle.png';
+import ringImage from './img/gift/ring.png';
+import frameImage from './img/gift/frame.png';
+import nameplateImage from './img/gift/nameplate.png';
+import braceletWomenImage from './img/gift/Bracelet_Women.png';
+import braceletMenImage from './img/gift/Bracelet_men.png';
+import penImage from './img/gift/pen.png';
+import coverImage from './img/gift/cover.png';
+import clockImage from './img/gift/clock.png';
+import passportImage from './img/gift/passport.png';
+import penstandImage from './img/gift/penstand.png';
+import cardholderImage from './img/gift/cardholder.png';
+import standImage from './img/gift/stand.png';
+import glassImage from './img/gift/glass.png';
+import diaryImage from './img/gift/diary.png';
+import tagImage from './img/gift/tag.png';
+import bedsheetImage from './img/gift/bedsheet.png';
+
+// ESM Image Imports - Print Category
+import flexImage from './img/print/flex.jpg';
+import blackbookImage from './img/print/blackbook.png';
+import visitingImage from './img/print/visiting.png';
+import pvcImage from './img/print/pvc.png';
+import stampImage from './img/print/stamp.png';
+import laceImage from './img/print/lace.png';
+import offsetImage from './img/print/offset.png';
+import billbookImage from './img/print/billbook.png';
+import letterheadImage from './img/print/letterhead.png';
+import pamphletImage from './img/print/pamphlet.png';
+import vinylImage from './img/print/vinyl.png';
+import weddingImage from './img/print/wedding.png';
+import certificateImage from './img/print/certificate.png';
+import invitationImage from './img/print/invitation.png';
+import calenderImage from './img/print/calender.png';
+import standeeImage from './img/print/standee.png';
+import bannerImage from './img/print/banner.png';
+
+// ESM Image Imports - Stationery Category
+import officeStationeryImage from './img/stationery/Office_Stationery.png';
+import schoolStationeryImage from './img/stationery/school_stationery.png';
+
+// ESM Image Imports - Xerox Category
+import photocopyImage from './img/xerox/photocopy.png';
+import laminationImage from './img/xerox/Lamination.png';
+import autocadImage from './img/xerox/autocad.png';
+import spiralImage from './img/xerox/Spiral.png';
+import dtpImage from './img/xerox/dtp.png';
+
+// ESM Image Imports - Combo Category
+import combo2Image from './img/Combo/combo2.png';
+import combo3Image from './img/Combo/combo3.png';
+import combo4Image from './img/Combo/combo4.png';
+
+// ESM Image Imports - Offer Category
+import offer1Image from './img/offer/offer1.png';
+import offer2Image from './img/offer/offer2.png';
+import offer3Image from './img/offer/offer3.png';
+
+// ESM Image Imports - Logo
+import logoImage from './img/logo.png';
+
 // Product Data
 const PRODUCTS = [
-  { "id": "1", "name": "Mug Printing", "category": "GIFT", "image": "./img/gift/mug.jpg" },
-  { "id": "2", "name": "Customized Wallet", "category": "GIFT", "image": "./img/gift/Wallet.png" },
-  { "id": "3", "name": "Office Stationery", "category": "STATIONERY", "image": "./img/stationery/Office_Stationery.png" },
-  { "id": "4", "name": "COMBO OFFER(2 in 1)", "category": "COMBO", "image": "./img/Combo/combo2.png" },
-  { "id": "5", "name": "PhotoCopy", "category": "XEROX", "image": "./img/xerox/photocopy.png" },
-  { "id": "6", "name": "Customized Pillow", "category": "GIFT", "image": "./img/gift/pillow.png" },
-  { "id": "7", "name": "Flex Printing", "category": "PRINT", "image": "./img/print/flex.jpg" },
-  { "id": "8", "name": "School Stationery", "category": "STATIONERY", "image": "./img/stationery/school_stationery.png" },
-  { "id": "9", "name": "COMBO OFFER(3 in 1)", "category": "COMBO", "image": "./img/Combo/combo3.png" },
-  { "id": "10", "name": "Lamination", "category": "XEROX", "image": "./img/xerox/Lamination.png" },
-  { "id": "11", "name": "Customized T-Shirt", "category": "GIFT", "image": "./img/gift/tshirt.png" },
-  { "id": "12", "name": "Black Book", "category": "PRINT", "image": "./img/print/blackbook.png" },
-  { "id": "13", "name": "Autocad Plotting", "category": "XEROX", "image": "./img/xerox/autocad.png" },
-  { "id": "14", "name": "Customized KeyChain", "category": "GIFT", "image": "./img/gift/keychain.png" },
-  { "id": "15", "name": "Visiting Card", "category": "PRINT", "image": "./img/print/visiting.png" },
-  { "id": "16", "name": "COMBO OFFER(4 in 1)", "category": "COMBO", "image": "./img/Combo/combo4.png" },
-  { "id": "17", "name": "Spiral binding", "category": "XEROX", "image": "./img/xerox/Spiral.png" },
-  { "id": "18", "name": "Customized Cover", "category": "GIFT", "image": "./img/gift/cover.png" },
-  { "id": "19", "name": "Smart(PVC) Card", "category": "PRINT", "image": "./img/print/pvc.png" },
-  { "id": "20", "name": "DTP Service", "category": "XEROX", "image": "./img/xerox/dtp.png" },
-  { "id": "21", "name": "Customized bottle", "category": "GIFT", "image": "./img/gift/bottle.png" },
-  { "id": "22", "name": "Lace Printing", "category": "PRINT", "image": "./img/print/lace.png" },
-  { "id": "23", "name": "Customized Ring", "category": "GIFT", "image": "./img/gift/ring.png" },
-  { "id": "24", "name": "Rubber Stamp", "category": "PRINT", "image": "./img/print/stamp.png" },
-  { "id": "25", "name": "Customized Frame", "category": "GIFT", "image": "./img/gift/frame.png" },
-  { "id": "26", "name": "Offset Printing", "category": "PRINT", "image": "./img/print/offset.png" },
-  { "id": "27", "name": "Customized Name Plate", "category": "GIFT", "image": "./img/gift/nameplate.png" },
-  { "id": "28", "name": "Bill Book Printing", "category": "PRINT", "image": "./img/print/billbook.png" },
-  { "id": "29", "name": "Customized Bracelet Women", "category": "GIFT", "image": "./img/gift/Bracelet_Women.png" },
-  { "id": "30", "name": "Letter Head Printing", "category": "PRINT", "image": "./img/print/letterhead.png" },
-  { "id": "31", "name": "Customized Bracelet Men", "category": "GIFT", "image": "./img/gift/Bracelet_men.png" },
-  { "id": "32", "name": "Pamphlet Printing", "category": "PRINT", "image": "./img/print/pamphlet.png" },
-  { "id": "33", "name": "Customized Pen", "category": "GIFT", "image": "./img/gift/pen.png" },
-  { "id": "34", "name": "Vinyl Printing", "category": "PRINT", "image": "./img/print/vinyl.png" },
-  { "id": "35", "name": "Customized Engraved", "category": "GIFT", "image": "./img/gift/engraved.png" },
-  { "id": "36", "name": "Wedding Card Printing", "category": "PRINT", "image": "./img/print/wedding.png" },
-  { "id": "37", "name": "Certificate Printing", "category": "PRINT", "image": "./img/print/certificate.png" },
-  { "id": "38", "name": "Invitation Card Printing", "category": "PRINT", "image": "./img/print/invitation.png" },
-  { "id": "39", "name": "Calendar Printing", "category": "PRINT", "image": "./img/print/calender.png" },
-  { "id": "40", "name": "Customized Clock", "category": "GIFT", "image": "./img/gift/clock.png" },
-  { "id": "41", "name": "Customized Passport Cover", "category": "GIFT", "image": "./img/gift/passport.png" },
-  { "id": "42", "name": "Customized Pen Stand", "category": "GIFT", "image": "./img/gift/penstand.png" },
-  { "id": "43", "name": "Visiting Card Holder", "category": "GIFT", "image": "./img/gift/cardholder.png" },
-  { "id": "44", "name": "Customized Mobile Stand", "category": "GIFT", "image": "./img/gift/stand.png" },
-  { "id": "45", "name": "Customized Wine Glass", "category": "GIFT", "image": "./img/gift/glass.png" },
-  { "id": "46", "name": "Customized Diary", "category": "GIFT", "image": "./img/gift/diary.png" },
-  { "id": "47", "name": "Customized Bag Tag", "category": "GIFT", "image": "./img/gift/tag.png" },
-  { "id": "48", "name": "Customized Bedsheet", "category": "GIFT", "image": "./img/gift/bedsheet.png" },
-  { "id": "49", "name": "Standees", "category": "PRINT", "image": "./img/print/standee.png" },
-  { "id": "50", "name": "Banner", "category": "PRINT", "image": "./img/print/banner.png" },
+  { "id": "1", "name": "Mug Printing", "category": "GIFT", "image": mugImage },
+  { "id": "2", "name": "Customized Wallet", "category": "GIFT", "image": walletImage },
+  { "id": "3", "name": "Office Stationery", "category": "STATIONERY", "image": officeStationeryImage },
+  { "id": "4", "name": "COMBO OFFER(2 in 1)", "category": "COMBO", "image": combo2Image },
+  { "id": "5", "name": "PhotoCopy", "category": "XEROX", "image": photocopyImage },
+  { "id": "6", "name": "Customized Pillow", "category": "GIFT", "image": pillarImage },
+  { "id": "7", "name": "Flex Printing", "category": "PRINT", "image": flexImage },
+  { "id": "8", "name": "School Stationery", "category": "STATIONERY", "image": schoolStationeryImage },
+  { "id": "9", "name": "COMBO OFFER(3 in 1)", "category": "COMBO", "image": combo3Image },
+  { "id": "10", "name": "Lamination", "category": "XEROX", "image": laminationImage },
+  { "id": "11", "name": "Customized T-Shirt", "category": "GIFT", "image": tshirtImage },
+  { "id": "12", "name": "Black Book", "category": "PRINT", "image": blackbookImage },
+  { "id": "13", "name": "Autocad Plotting", "category": "XEROX", "image": autocadImage },
+  { "id": "14", "name": "Customized KeyChain", "category": "GIFT", "image": keychainImage },
+  { "id": "15", "name": "Visiting Card", "category": "PRINT", "image": visitingImage },
+  { "id": "16", "name": "COMBO OFFER(4 in 1)", "category": "COMBO", "image": combo4Image },
+  { "id": "17", "name": "Spiral binding", "category": "XEROX", "image": spiralImage },
+  { "id": "18", "name": "Customized Cover", "category": "GIFT", "image": coverImage },
+  { "id": "19", "name": "Smart(PVC) Card", "category": "PRINT", "image": pvcImage },
+  { "id": "20", "name": "DTP Service", "category": "XEROX", "image": dtpImage },
+  { "id": "21", "name": "Customized bottle", "category": "GIFT", "image": bottleImage },
+  { "id": "22", "name": "Lace Printing", "category": "PRINT", "image": laceImage },
+  { "id": "23", "name": "Customized Ring", "category": "GIFT", "image": ringImage },
+  { "id": "24", "name": "Rubber Stamp", "category": "PRINT", "image": stampImage },
+  { "id": "25", "name": "Customized Frame", "category": "GIFT", "image": frameImage },
+  { "id": "26", "name": "Offset Printing", "category": "PRINT", "image": offsetImage },
+  { "id": "27", "name": "Customized Name Plate", "category": "GIFT", "image": nameplateImage },
+  { "id": "28", "name": "Bill Book Printing", "category": "PRINT", "image": billbookImage },
+  { "id": "29", "name": "Customized Bracelet Women", "category": "GIFT", "image": braceletWomenImage },
+  { "id": "30", "name": "Letter Head Printing", "category": "PRINT", "image": letterheadImage },
+  { "id": "31", "name": "Customized Bracelet Men", "category": "GIFT", "image": braceletMenImage },
+  { "id": "32", "name": "Pamphlet Printing", "category": "PRINT", "image": pamphletImage },
+  { "id": "33", "name": "Customized Pen", "category": "GIFT", "image": penImage },
+  { "id": "34", "name": "Vinyl Printing", "category": "PRINT", "image": vinylImage },
+  { "id": "35", "name": "Customized Engraved", "category": "GIFT", "image": frameImage },
+  { "id": "36", "name": "Wedding Card Printing", "category": "PRINT", "image": weddingImage },
+  { "id": "37", "name": "Certificate Printing", "category": "PRINT", "image": certificateImage },
+  { "id": "38", "name": "Invitation Card Printing", "category": "PRINT", "image": invitationImage },
+  { "id": "39", "name": "Calendar Printing", "category": "PRINT", "image": calenderImage },
+  { "id": "40", "name": "Customized Clock", "category": "GIFT", "image": clockImage },
+  { "id": "41", "name": "Customized Passport Cover", "category": "GIFT", "image": passportImage },
+  { "id": "42", "name": "Customized Pen Stand", "category": "GIFT", "image": penstandImage },
+  { "id": "43", "name": "Visiting Card Holder", "category": "GIFT", "image": cardholderImage },
+  { "id": "44", "name": "Customized Mobile Stand", "category": "GIFT", "image": standImage },
+  { "id": "45", "name": "Customized Wine Glass", "category": "GIFT", "image": glassImage },
+  { "id": "46", "name": "Customized Diary", "category": "GIFT", "image": diaryImage },
+  { "id": "47", "name": "Customized Bag Tag", "category": "GIFT", "image": tagImage },
+  { "id": "48", "name": "Customized Bedsheet", "category": "GIFT", "image": bedsheetImage },
+  { "id": "49", "name": "Standees", "category": "PRINT", "image": standeeImage },
+  { "id": "50", "name": "Banner", "category": "PRINT", "image": bannerImage },
 ];
 
 // Spotlight Offers
@@ -72,7 +139,7 @@ const SPOTLIGHT_OFFERS = [
     discountedPrice: "₹1,999",
     discount: "35%",
     endDate: getEndDate(2),
-    image: "img/offer/offer2.png?w=400&h=300&fit=crop",
+    image: offer2Image,
   },
   {
     id: 2,
@@ -82,7 +149,7 @@ const SPOTLIGHT_OFFERS = [
     discountedPrice: "₹100",
     discount: "33%",
     endDate: getEndDate(1),
-    image: "img/offer/offer1.png",
+    image: offer1Image,
   },
   {
     id: 3,
@@ -92,7 +159,7 @@ const SPOTLIGHT_OFFERS = [
     discountedPrice: "₹1,499",
     discount: "40%",
     endDate: getEndDate(2),
-    image: "img/offer/offer3.png?w=400&h=300&fit=crop",
+    image: offer3Image,
   },
   {
     id: 4,
@@ -102,7 +169,7 @@ const SPOTLIGHT_OFFERS = [
     discountedPrice: "₹319",
     discount: "20%",
     endDate: getEndDate(3),
-    image: "img/gift/tshirt.png?w=400&h=300&fit=crop",
+    image: tshirtImage,
   },
 ];
 
@@ -337,7 +404,7 @@ export default function AJXSWebsite() {
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
             <div className="logo-rotate flex items-center justify-center">
-              <img src="img/logo.png" className="w-10 h-10 sm:w-16 sm:h-16 object-contain rounded-full logo-scale" alt="AJXS Logo" />
+              <img src={logoImage} className="w-10 h-10 sm:w-16 sm:h-16 object-contain rounded-full logo-scale" alt="AJXS Logo" />
             </div>
             <div>
               <h1 className="font-bold text-lg text-gray-800">AJXS</h1>
