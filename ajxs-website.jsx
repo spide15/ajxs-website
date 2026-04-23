@@ -242,26 +242,10 @@ const TiltCard = ({ children, className = "" }) => {
   );
 };
 
-// Typed Heading Animation
+// Typed Heading (static for fast LCP)
 const TypedHeading = () => {
-  const [displayedText, setDisplayedText] = useState('');
   const fullText = "Mumbai's Destination for Printing & Gifting Magic";
-
-  useEffect(() => {
-    let currentIndex = 0;
-    const interval = setInterval(() => {
-      if (currentIndex < fullText.length) {
-        setDisplayedText(fullText.slice(0, currentIndex + 1));
-        currentIndex++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 50);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  return <h1 className="text-4xl md:text-6xl font-bold text-white">{displayedText}</h1>;
+  return <h1 className="text-4xl md:text-6xl font-bold text-white">{fullText}</h1>;
 };
 
 // Product Card
@@ -488,42 +472,22 @@ export default function AJXSWebsite() {
         />
 
         <div className="relative z-10 text-center px-4 max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="mb-6"
-          >
+          <div className="mb-6">
             <p className="text-xl md:text-2xl font-light mb-4">Welcome to</p>
             <div className="inline-block px-6 py-2 bg-white bg-opacity-10 backdrop-blur rounded-full border border-white border-opacity-20 mb-6">
               <span className="text-3xl md:text-4xl font-bold">Avani Jumbo Xerox & Stationery</span>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="mb-8"
-          >
+          <div className="mb-8">
             <TypedHeading />
-          </motion.div>
+          </div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-            className="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl mx-auto"
-          >
+          <p className="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
             📍 Your one-stop solution for premium printing, customization, and stationery services
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-          >
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="#offers"
               className="bg-white text-red-600 px-8 py-4 rounded-lg font-bold hover:bg-gray-100 transition-colors flex items-center justify-center gap-2"
@@ -536,7 +500,7 @@ export default function AJXSWebsite() {
             >
               🛍️ Explore Services
             </a>
-          </motion.div>
+          </div>
         </div>
 
         {/* Scroll Indicator */}

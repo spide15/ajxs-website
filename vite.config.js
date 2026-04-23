@@ -14,9 +14,21 @@ export default defineConfig({
     minify: 'esbuild',
     rollupOptions: {
       output: {
-        manualChunks: {
-          'vendor': ['react', 'react-dom'],
-          'motion': ['framer-motion'],
+        manualChunks(id) {
+          const normalizedId = id.replace(/\\/g, '/')
+
+          if (normalizedId.includes('/node_modules/')) {
+            if (normalizedId.includes('/react/')) return 'vendor-react'
+            if (normalizedId.includes('/react-dom/')) return 'vendor-react-dom'
+            if (normalizedId.includes('/lucide-react/')) return 'vendor-lucide'
+            if (normalizedId.includes('/framer-motion/')) return 'vendor-motion'
+            if (normalizedId.includes('/tailwindcss/') || normalizedId.includes('/postcss/') || normalizedId.includes('/autoprefixer/')) return 'vendor-css'
+            return 'vendor'
+          }
+
+          if (normalizedId.includes('/src/components/') || normalizedId.includes('/src/lib/') || normalizedId.includes('/src/utils/')) {
+            return 'common'
+          }
         }
       }
     }
