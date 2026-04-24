@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, MapPin, Phone, Mail, MessageCircle, Star, Clock, ChevronDown, Menu, X, Youtube, Instagram } from 'lucide-react';
+import { Search, MapPin, Phone, Mail, MessageCircle, Star, Clock, ChevronDown, ChevronUp, Menu, X, Youtube, Instagram } from 'lucide-react';
 
 
 
@@ -476,8 +476,31 @@ export default function AJXSWebsite() {
   const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [searchTerm, setSearchTerm] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const servicesRef = useRef(null);
 
   const categories = ['ALL', 'GIFT', 'STATIONERY', 'XEROX', 'PRINT', 'COMBO'];
+
+  const handleSearchTermChange = (value) => {
+    setSearchTerm(value);
+    if (servicesRef.current) {
+      servicesRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const clearSearch = () => {
+    setSearchTerm('');
+    if (servicesRef.current) {
+      servicesRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const filteredOffers = SPOTLIGHT_OFFERS.filter((offer) => {
+    const search = searchTerm.toLowerCase();
+    return (
+      offer.title.toLowerCase().includes(search) ||
+      offer.description.toLowerCase().includes(search)
+    );
+  });
 
   const filteredProducts = PRODUCTS.filter((product) => {
     const matchesCategory = selectedCategory === 'ALL' || product.category === selectedCategory;
@@ -529,6 +552,30 @@ export default function AJXSWebsite() {
           >
             📞 Call Now
           </motion.a>
+        </div>
+
+        {/* Header Search */}
+        <div className="border-t border-gray-200 bg-white px-4 py-4">
+          <div className="relative w-full max-w-2xl mx-auto">
+            <Search className="absolute left-4 top-3.5 text-gray-400" size={20} />
+            <input
+              type="text"
+              placeholder="Search products &  offers ..."
+              value={searchTerm}
+              onChange={(e) => handleSearchTermChange(e.target.value)}
+              className="w-full pl-12 pr-12 py-3 border-2 border-gray-300 rounded-full focus:border-red-600 outline-none transition-colors"
+            />
+            {searchTerm && (
+              <button
+                type="button"
+                onClick={clearSearch}
+                className="absolute right-4 top-3.5 text-gray-500 hover:text-gray-900"
+                aria-label="Clear search"
+              >
+                <X size={20} />
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Mobile Menu */}
@@ -640,7 +687,7 @@ export default function AJXSWebsite() {
       </section>
 
       {/* Services/Products Section */}
-      <section id="services" className="py-20 px-4">
+      <section id="services" ref={servicesRef} className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -651,25 +698,47 @@ export default function AJXSWebsite() {
               Our Complete Service Catalog
             </h2>
             <p className="text-gray-600 text-lg">48+ Products & Services to Choose From</p>
+            {searchTerm && (
+              <p className="text-red-600 text-base mt-4">
+                Showing results for "{searchTerm}"
+              </p>
+            )}
           </motion.div>
 
-          {/* Search Bar */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="mb-8"
-          >
-            <div className="relative max-w-2xl mx-auto">
-              <Search className="absolute left-4 top-3.5 text-gray-400" size={20} />
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 border-2 border-gray-300 rounded-lg focus:border-red-600 outline-none transition-colors"
-              />
+          {searchTerm && (
+            <div className="mb-12">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
+                <div>
+                  <p className="text-sm uppercase font-semibold tracking-[0.3em] text-red-600">Search Results</p>
+                  <h3 className="text-2xl font-bold text-gray-800">Best offer matches first</h3>
+                </div>
+                <div className="flex items-center gap-2 text-red-600">
+                  <ChevronUp size={18} />
+                  <span className="font-semibold">Offers above</span>
+                  <ChevronDown size={18} />
+                  <span className="font-semibold">Products below</span>
+                </div>
+              </div>
+
+              {filteredOffers.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {filteredOffers.map((offer) => (
+                    <SpotlightCard key={offer.id} offer={offer} />
+                  ))}
+                </div>
+              ) : (
+                <div className="rounded-3xl border border-dashed border-red-300 bg-red-50 p-8 text-center">
+                  <p className="text-red-700 font-semibold">No matching offers found for "{searchTerm}".</p>
+                </div>
+              )}
+
+              <div className="mt-10 flex items-center justify-center gap-3 text-gray-600">
+                <ChevronDown size={20} />
+                <span className="font-semibold">Now see matched products</span>
+                <ChevronDown size={20} />
+              </div>
             </div>
-          </motion.div>
+          )}
 
           {/* Category Filter */}
           <motion.div
