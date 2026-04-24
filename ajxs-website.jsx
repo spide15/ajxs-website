@@ -2,6 +2,26 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, MapPin, Phone, Mail, MessageCircle, Star, Clock, ChevronDown, Menu, X, Youtube, Instagram } from 'lucide-react';
 
+
+
+// ESM Image Imports - Logo
+import logoImage from './img/logo.png';
+
+// ESM Image Imports - Offer Category
+import LH_Offer_2 from './img/offer/LH_Offer_2.jpeg';
+import LH_Offer_1 from './img/offer/LH_Offer_1.jpeg';
+import en_offer_1 from './img/offer/en_offer_1.jpeg';
+import card_offer_1 from './img/offer/card_offer_1.jpeg';
+import card_0ffer2 from './img/offer/card_0ffer2.jpeg';
+import A5_offer from './img/offer/A5_offer.jpeg';
+import St_offer from './img/offer/St_offer.jpeg';
+import PL_offer_1 from './img/offer/PL_offer_1.jpeg';
+import MG_Offer_3 from './img/offer/MG_Offer_3.jpeg';
+import MG_Offer_2 from './img/offer/MG_Offer_2.jpeg';
+import MG_Offer_1 from './img/offer/MG_Offer_1.jpeg';
+import flex_offer from './img/offer/flex_offer.jpeg';
+import BB_offer_1 from './img/offer/BB_offer_1.jpeg';
+
 // ESM Image Imports - Gift Category
 import mugImage from './img/gift/mug.jpg';
 import walletImage from './img/gift/Wallet.png';
@@ -61,13 +81,7 @@ import combo2Image from './img/Combo/combo2.png';
 import combo3Image from './img/Combo/combo3.png';
 import combo4Image from './img/Combo/combo4.png';
 
-// ESM Image Imports - Offer Category
-import offer1Image from './img/offer/offer1.png';
-import offer2Image from './img/offer/offer2.png';
-import offer3Image from './img/offer/offer3.png';
 
-// ESM Image Imports - Logo
-import logoImage from './img/logo.png';
 
 // Product Data
 const PRODUCTS = [
@@ -133,44 +147,134 @@ const getEndDate = (daysAhead = 2) => {
 const SPOTLIGHT_OFFERS = [
   {
     id: 1,
-    title: "Buy 2 Magic Mugs, Get 1 FREE",
-    description: "Premium customized mugs with magical color-changing technology",
-    originalPrice: "₹1,299",
-    discountedPrice: "₹1,999",
-    discount: "35%",
+    title: "Letterhead Printing (1000 Qty)",
+    description: "High-quality letterhead printing for 1000 quantity to boost your professional branding.",
+    originalPrice: "₹2000",
+    discountedPrice: "₹1700",
+    discount: "15%",
     endDate: getEndDate(2),
-    image: offer2Image,
+    image: LH_Offer_2,
   },
   {
     id: 2,
-    title: "100+ B&W Photocopies",
-    description: "Crystal clear B&W photocopies with just ₹1 per page",
-    originalPrice: "₹150",
-    discountedPrice: "₹100",
-    discount: "33%",
-    endDate: getEndDate(1),
-    image: offer1Image,
+    title: "Letterhead Printing Special (5000 Qty)",
+    description: "5000 QTY Letter Heads at an unbeatable price - perfect for businesses looking to make a lasting impression (100 GSM Alabaster Paper).",
+    originalPrice: "₹8000",
+    discountedPrice: "₹6000",
+    discount: "25%",
+    endDate: getEndDate(3),
+    image: LH_Offer_1,
   },
   {
     id: 3,
-    title: "Ultimate Gifting Combo",
-    description: "Wallet + Keychain + Premium Pen for one unbeatable price",
-    originalPrice: "₹2,499",
-    discountedPrice: "₹1,499",
-    discount: "40%",
-    endDate: getEndDate(2),
-    image: offer3Image,
+    title: "Envelope Printing Special",
+    description: "Single side printed envelopes, 1000 quantity, for all your official correspondence needs.",
+    originalPrice: "₹3125",
+    discountedPrice: "₹2500",
+    discount: "20%",
+    endDate: getEndDate(1),
+    image: en_offer_1,
   },
   {
     id: 4,
-    title: "Customized T-Shirt Deal",
-    description: "Bulk orders: Get 20% off on any quantity above 50 pieces",
-    originalPrice: "₹399",
-    discountedPrice: "₹319",
+    title: "Single Sided Visiting Cards",
+    description: "1000 Qty single side visiting cards to network effectively and leave a mark.",
+    originalPrice: "₹1250",
+    discountedPrice: "₹1000",
+    discount: "20%",
+    endDate: getEndDate(2),
+    image: card_offer_1,
+  },
+  {
+    id: 5,
+    title: "Double Sided Visiting Cards",
+    description: "1000 Qty front and back premium visiting cards for comprehensive business details.",
+    originalPrice: "₹1375",
+    discountedPrice: "₹1100",
+    discount: "20%",
+    endDate: getEndDate(4),
+    image: card_0ffer2,
+  },
+  {
+    id: 6,
+    title: "A5 Flyer Printing (10,000 Qty)",
+    description: "Front & back multicolor A5 size flyers on glossy paper to maximize your marketing reach.",
+    originalPrice: "₹8125",
+    discountedPrice: "₹6500",
+    discount: "20%",
+    endDate: getEndDate(5),
+    image: A5_offer,
+  },
+  {
+    id: 7,
+    title: "Premium Standee Printing",
+    description: "High-quality, eye-catching standee printing for events, promotions, and shop displays.",
+    originalPrice: "₹2000",
+    discountedPrice: "₹1500",
+    discount: "25%",
+    endDate: getEndDate(2),
+    image: St_offer,
+  },
+  {
+    id: 8,
+    title: "Personalized Pillow Printing",
+    description: "Custom printed pillows perfect for personalized gifting or home decor.",
+    originalPrice: "₹750",
+    discountedPrice: "₹600",
     discount: "20%",
     endDate: getEndDate(3),
-    image: tshirtImage,
+    image: PL_offer_1,
   },
+  {
+    id: 9,
+    title: "Magic Mug Printing (1+1 Offer)",
+    description: "Buy one get one free on custom magic mug printing - reveal your memories with hot beverages.",
+    originalPrice: "₹625",
+    discountedPrice: "₹500",
+    discount: "20%",
+    endDate: getEndDate(1),
+    image: MG_Offer_3,
+  },
+  {
+    id: 10,
+    title: "White Mug Printing (1+1 Offer)",
+    description: "Incredible 1+1 deal on custom printed white mugs for your loved ones.",
+    originalPrice: "₹400",
+    discountedPrice: "₹300",
+    discount: "25%",
+    endDate: getEndDate(2),
+    image: MG_Offer_2,
+  },
+  {
+    id: 11,
+    title: "White Mug Printing (1 PCS)",
+    description: "Personalize your coffee time with a custom printed white mug for just one piece.",
+    originalPrice: "₹225",
+    discountedPrice: "₹180",
+    discount: "20%",
+    endDate: getEndDate(2),
+    image: MG_Offer_1,
+  },
+  {
+    id: 12,
+    title: "Premium Canvas Printing",
+    description: "High-quality Canvas printing at unbeatable per sq.ft. rates. We also offer Sada Flex (₹13), Sunboard (₹75), and Vinyl (₹40).",
+    originalPrice: "₹200",
+    discountedPrice: "₹150",
+    discount: "25%",
+    endDate: getEndDate(5),
+    image: flex_offer,
+  },
+  {
+    id: 13,
+    title: "Bill Book Printing A5 (1+1)",
+    description: "Quantity 10 Single Color A5 Size Bill Books. Perfect for keeping your business transactions organized.",
+    originalPrice: "₹2000",
+    discountedPrice: "₹1500",
+    discount: "25%",
+    endDate: getEndDate(3),
+    image: BB_offer_1,
+  }
 ];
 
 // Countdown Timer Component
@@ -322,7 +426,7 @@ const SpotlightCard = ({ offer }) => {
           🔥 LIMITED TIME OFFER 🔥
         </div>
 
-        <div className="relative h-56 overflow-hidden bg-gray-200 mt-10">
+        <div className="relative w-full aspect-square overflow-hidden bg-gray-200 mt-10">
           <img
             src={offer.image}
             alt={offer.title}
