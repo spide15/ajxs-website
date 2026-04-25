@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, MapPin, Phone, Mail, MessageCircle, Star, Clock, ChevronDown, ChevronUp, Menu, X, Youtube, Instagram } from 'lucide-react';
+import { Search, MapPin, Phone, Mail, MessageCircle, Star, Clock, ChevronDown, ChevronUp, Menu, X, Youtube, Instagram, Plus } from 'lucide-react';
 
 
 
@@ -414,13 +414,12 @@ const ProductCard = ({ product }) => {
 // Spotlight Offer Card
 const SpotlightCard = ({ offer }) => {
   return (
-    <TiltCard>
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-        className="relative bg-white rounded-lg overflow-hidden shadow-2xl hover:shadow-3xl transition-all border-2 border-red-500"
-      >
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5 }}
+      className="relative bg-white rounded-lg overflow-hidden shadow-2xl hover:shadow-3xl transition-all border-2 border-red-500"
+    >
         {/* Limited Time Banner */}
         <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-red-600 to-orange-500 text-white py-2 px-4 text-center font-bold text-sm">
           🔥 LIMITED TIME OFFER 🔥
@@ -467,7 +466,6 @@ const SpotlightCard = ({ offer }) => {
           </motion.button>
         </div>
       </motion.div>
-    </TiltCard>
   );
 };
 
@@ -476,6 +474,7 @@ export default function AJXSWebsite() {
   const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [searchTerm, setSearchTerm] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [fabExpanded, setFabExpanded] = useState(false);
   const servicesRef = useRef(null);
 
   const categories = ['ALL', 'GIFT', 'STATIONERY', 'XEROX', 'PRINT', 'COMBO'];
@@ -711,6 +710,9 @@ export default function AJXSWebsite() {
                 <div>
                   <p className="text-sm uppercase font-semibold tracking-[0.3em] text-red-600">Search Results</p>
                   <h3 className="text-2xl font-bold text-gray-800">Best offer matches first</h3>
+                  <p className="text-gray-600 mt-2">
+                    {filteredOffers.length} offer{filteredOffers.length !== 1 ? 's' : ''} and {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''} found
+                  </p>
                 </div>
                 <div className="flex items-center gap-2 text-red-600">
                   <ChevronUp size={18} />
@@ -721,7 +723,7 @@ export default function AJXSWebsite() {
               </div>
 
               {filteredOffers.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {filteredOffers.map((offer) => (
                     <SpotlightCard key={offer.id} offer={offer} />
                   ))}
@@ -734,7 +736,7 @@ export default function AJXSWebsite() {
 
               <div className="mt-10 flex items-center justify-center gap-3 text-gray-600">
                 <ChevronDown size={20} />
-                <span className="font-semibold">Now see matched products</span>
+                <span className="font-semibold">Matched products</span>
                 <ChevronDown size={20} />
               </div>
             </div>
@@ -932,17 +934,68 @@ export default function AJXSWebsite() {
         </div>
       </footer>
 
-      {/* Floating WhatsApp Button */}
-      <motion.a
-        href="https://wa.me/917738405495"
-        target="_blank"
-        rel="noopener noreferrer"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        className="fixed bottom-8 right-8 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-colors z-40"
-      >
-        <MessageCircle size={28} />
-      </motion.a>
+      {/* Expandable Floating Action Button */}
+      <div className="fixed bottom-8 right-8 z-40">
+        <AnimatePresence>
+          {fabExpanded && (
+            <>
+              {/* WhatsApp Button */}
+              <motion.a
+                href="https://wa.me/917738405495"
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ scale: 0, y: 0 }}
+                animate={{ scale: 1, y: -80 }}
+                exit={{ scale: 0, y: 0 }}
+                transition={{ duration: 0.2 }}
+                className="absolute bottom-0 right-0 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-colors"
+                title="WhatsApp"
+              >
+                <MessageCircle size={24} />
+              </motion.a>
+              {/* Email Button */}
+              <motion.a
+                href="mailto:avanixerox999@gmail.com"
+                initial={{ scale: 0, y: 0 }}
+                animate={{ scale: 1, y: -140 }}
+                exit={{ scale: 0, y: 0 }}
+                transition={{ duration: 0.2, delay: 0.1 }}
+                className="absolute bottom-0 right-0 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600 transition-colors"
+                title="Email"
+              >
+                <Mail size={24} />
+              </motion.a>
+              {/* Call Button */}
+              <motion.a
+                href="tel:+919320999385"
+                initial={{ scale: 0, y: 0 }}
+                animate={{ scale: 1, y: -200 }}
+                exit={{ scale: 0, y: 0 }}
+                transition={{ duration: 0.2, delay: 0.2 }}
+                className="absolute bottom-0 right-0 bg-red-500 text-white p-4 rounded-full shadow-lg hover:bg-red-600 transition-colors"
+                title="Call"
+              >
+                <Phone size={24} />
+              </motion.a>
+            </>
+          )}
+        </AnimatePresence>
+        {/* Main FAB Button */}
+        <motion.button
+          onClick={() => setFabExpanded(!fabExpanded)}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          className="bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors relative"
+          title={fabExpanded ? "Close" : "Contact Us"}
+        >
+          <motion.div
+            animate={{ rotate: fabExpanded ? 45 : 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <Plus size={28} />
+          </motion.div>
+        </motion.button>
+      </div>
     </div>
   );
 }
