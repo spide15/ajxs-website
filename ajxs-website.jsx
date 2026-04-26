@@ -794,32 +794,36 @@ export default function AJXSWebsite() {
                   animate={{ opacity: 1, y: 0 }}
                   className="mb-12"
                 >
-                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
-                    <div>
-                      <p className="text-sm uppercase font-semibold tracking-[0.3em] text-red-600">Search Results</p>
-                      <h3 className="text-2xl font-bold text-gray-800">Best offer matches first</h3>
-                      <p className="text-gray-600 mt-2">
-                        {isSearching ? (
-                          <span className="flex items-center gap-2">
-                            <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity }}>
-                              <Loader size={16} />
-                            </motion.div>
-                            Filtering results...
-                          </span>
-                        ) : (
-                          <>
-                            {filteredOffers.length} offer{filteredOffers.length !== 1 ? 's' : ''} and {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''} found
-                          </>
-                        )}
-                      </p>
+                  {(filteredOffers.length > 0 || filteredProducts.length > 0) && (
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
+                      <div>
+                        <p className="text-sm uppercase font-semibold tracking-[0.3em] text-red-600">Search Results</p>
+                        <h3 className="text-2xl font-bold text-gray-800">current offer matches first</h3>
+                        <p className="text-gray-600 mt-2">
+                          {isSearching ? (
+                            <span className="flex items-center gap-2">
+                              <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity }}>
+                                <Loader size={16} />
+                              </motion.div>
+                              Filtering results...
+                            </span>
+                          ) : (
+                            <>
+                              {filteredOffers.length} offer{filteredOffers.length !== 1 ? 's' : ''} and {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''} found
+                            </>
+                          )}
+                        </p>
+                      </div>
+                      {filteredOffers.length > 0 && (
+                        <div className="flex items-center gap-2 text-red-600">
+                          <ChevronUp size={18} />
+                          <span className="font-semibold">Offers above</span>
+                          <ChevronDown size={18} />
+                          <span className="font-semibold">Products below</span>
+                        </div>
+                      )}
                     </div>
-                    <div className="flex items-center gap-2 text-red-600">
-                      <ChevronUp size={18} />
-                      <span className="font-semibold">Offers above</span>
-                      <ChevronDown size={18} />
-                      <span className="font-semibold">Products below</span>
-                    </div>
-                  </div>
+                  )}
 
                   {isSearching ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -838,13 +842,13 @@ export default function AJXSWebsite() {
                         <SpotlightCard key={offer.id} offer={offer} />
                       ))}
                     </div>
-                  ) : (
+                  ) : filteredProducts.length === 0 ? (
                     <div className="rounded-3xl border border-dashed border-red-300 bg-red-50 p-8 text-center">
-                      <p className="text-red-700 font-semibold">No matching offers found for "{searchTerm}".</p>
+                      <p className="text-red-700 font-semibold">No matching results found for "{searchTerm}".</p>
                     </div>
-                  )}
+                  ) : null}
 
-                  {!isSearching && (
+                  {!isSearching && filteredOffers.length > 0 && (
                     <div className="mt-10 flex items-center justify-center gap-3 text-gray-600">
                       <ChevronDown size={20} />
                       <span className="font-semibold">Matched products</span>
