@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, MapPin, Phone, Mail, MessageCircle, Star, Clock, ChevronDown, ChevronUp, Menu, X, Youtube, Instagram, Plus } from 'lucide-react';
+import { Search, MapPin, Phone, Mail, MessageCircle, Star, Clock, ChevronDown, ChevronUp, Menu, X, Youtube, Instagram, Plus, Loader } from 'lucide-react';
 
 
 
@@ -473,25 +473,60 @@ const SpotlightCard = ({ offer }) => {
 export default function AJXSWebsite() {
   const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchInput, setSearchInput] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [fabExpanded, setFabExpanded] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const servicesRef = useRef(null);
+  const debounceTimer = useRef(null);
 
-  const categories = ['ALL', 'GIFT', 'STATIONERY', 'XEROX', 'PRINT', 'COMBO'];
+  // Initial load animation
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsInitialLoad(false);
+    }, 800);
+    return () => clearTimeout(timer);
+  }, []);
 
-  const handleSearchTermChange = (value) => {
-    setSearchTerm(value);
-    if (servicesRef.current) {
+  // Debounced search function
+  const debouncedSearch = useCallback((value) => {
+    if (debounceTimer.current) {
+      clearTimeout(debounceTimer.current);
+    }
+    
+    setIsSearching(true);
+    debounceTimer.current = setTimeout(() => {
+      setSearchTerm(value);
+      setIsSearching(false);
+      if (value && servicesRef.current) {
+        servicesRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 400);
+  }, []);
+
+  const handleSearchInputChange = (value) => {
+    setSearchInput(value);
+    debouncedSearch(value);
+  };
+
+  const handleSearchSubmit = () => {
+    setSearchTerm(searchInput);
+    setIsSearching(false);
+    if (searchInput && servicesRef.current) {
       servicesRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
   const clearSearch = () => {
     setSearchTerm('');
+    setSearchInput('');
     if (servicesRef.current) {
       servicesRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
+
+  const categories = ['ALL', 'GIFT', 'STATIONERY', 'XEROX', 'PRINT', 'COMBO'];
 
   const filteredOffers = SPOTLIGHT_OFFERS.filter((offer) => {
     const search = searchTerm.toLowerCase();
@@ -535,45 +570,71 @@ export default function AJXSWebsite() {
             ))}
           </nav>
 
-          {/* Mobile Menu Button */}
+         
+
+          {/* Contact Button */}
+          <motion.a
+            href="tel:+919320999385"
+            whileHover={{ scale: 1.05 }}
+            className="bg-red-600 text-white px-3 py-2 md:px-4 rounded-lg font-semibold hover:bg-red-700 transition-colors text-sm md:text-base"
+          >
+            📞 Call Now
+          </motion.a>
+
+           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden"
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
-
-          {/* Contact Button */}
-          <motion.a
-            href="tel:+919320999385"
-            whileHover={{ scale: 1.05 }}
-            className="hidden md:block bg-red-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-700 transition-colors"
-          >
-            📞 Call Now
-          </motion.a>
         </div>
 
         {/* Header Search */}
         <div className="border-t border-gray-200 bg-white px-4 py-4">
-          <div className="relative w-full max-w-2xl mx-auto">
-            <Search className="absolute left-4 top-3.5 text-gray-400" size={20} />
-            <input
-              type="text"
-              placeholder="Search products &  offers ..."
-              value={searchTerm}
-              onChange={(e) => handleSearchTermChange(e.target.value)}
-              className="w-full pl-12 pr-12 py-3 border-2 border-gray-300 rounded-full focus:border-red-600 outline-none transition-colors"
-            />
-            {searchTerm && (
-              <button
-                type="button"
-                onClick={clearSearch}
-                className="absolute right-4 top-3.5 text-gray-500 hover:text-gray-900"
-                aria-label="Clear search"
-              >
-                <X size={20} />
-              </button>
-            )}
+          <div className="relative w-full max-w-2xl mx-auto flex flex-col sm:flex-row gap-2">
+            <div className="flex-1 relative">
+              <Search className="absolute left-4 top-3.5 text-gray-400" size={20} />
+              <input
+                type="text"
+                placeholder="Search products & offers ..."
+                value={searchInput}
+                onChange={(e) => handleSearchInputChange(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleSearchSubmit()}
+                className="w-full pl-12 pr-12 py-3 border-2 border-gray-300 rounded-full focus:border-red-600 outline-none transition-colors"
+              />
+              {searchInput && (
+                <button
+                  type="button"
+                  onClick={clearSearch}
+                  className="absolute right-4 top-3.5 text-gray-500 hover:text-gray-900"
+                  aria-label="Clear search"
+                >
+                  <X size={20} />
+                </button>
+              )}
+            </div>
+            <motion.button
+              onClick={handleSearchSubmit}
+              disabled={isSearching || !searchInput}
+              whileHover={{ scale: !isSearching && searchInput ? 1.05 : 1 }}
+              whileTap={{ scale: !isSearching && searchInput ? 0.95 : 1 }}
+              className="bg-red-600 text-white px-4 sm:px-6 py-3 rounded-full font-semibold hover:bg-red-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-1 sm:gap-2 whitespace-nowrap text-sm sm:text-base"
+            >
+              {isSearching ? (
+                <>
+                  <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity }}>
+                    <Loader size={18} />
+                  </motion.div>
+                  <span>Searching...</span>
+                </>
+              ) : (
+                <>
+                  <span>🔍</span>
+                  <span className="hidden xs:inline">Search</span>
+                </>
+              )}
+            </motion.button>
           </div>
         </div>
 
@@ -688,95 +749,161 @@ export default function AJXSWebsite() {
       {/* Services/Products Section */}
       <section id="services" ref={servicesRef} className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-              Our Complete Service Catalog
-            </h2>
-            <p className="text-gray-600 text-lg">48+ Products & Services to Choose From</p>
-            {searchTerm && (
-              <p className="text-red-600 text-base mt-4">
-                Showing results for "{searchTerm}"
-              </p>
-            )}
-          </motion.div>
-
-          {searchTerm && (
-            <div className="mb-12">
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
-                <div>
-                  <p className="text-sm uppercase font-semibold tracking-[0.3em] text-red-600">Search Results</p>
-                  <h3 className="text-2xl font-bold text-gray-800">Best offer matches first</h3>
-                  <p className="text-gray-600 mt-2">
-                    {filteredOffers.length} offer{filteredOffers.length !== 1 ? 's' : ''} and {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''} found
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 text-red-600">
-                  <ChevronUp size={18} />
-                  <span className="font-semibold">Offers above</span>
-                  <ChevronDown size={18} />
-                  <span className="font-semibold">Products below</span>
-                </div>
+          {/* Show loading skeleton on initial load */}
+          {isInitialLoad ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center"
+            >
+              <div className="flex justify-center mb-8">
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+                >
+                  <Loader size={48} className="text-red-600" />
+                </motion.div>
               </div>
+              <p className="text-gray-600 text-lg font-semibold">Loading our amazing services...</p>
+            </motion.div>
+          ) : (
+            <>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                className="text-center mb-16"
+              >
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                  Our Complete Service Catalog
+                </h2>
+                <p className="text-gray-600 text-lg">48+ Products & Services to Choose From</p>
+                {searchTerm && (
+                  <motion.p 
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-red-600 text-base mt-4 font-semibold"
+                  >
+                    ✓ Showing results for "{searchTerm}"
+                  </motion.p>
+                )}
+              </motion.div>
 
-              {filteredOffers.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {filteredOffers.map((offer) => (
-                    <SpotlightCard key={offer.id} offer={offer} />
+              {searchTerm && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mb-12"
+                >
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
+                    <div>
+                      <p className="text-sm uppercase font-semibold tracking-[0.3em] text-red-600">Search Results</p>
+                      <h3 className="text-2xl font-bold text-gray-800">Best offer matches first</h3>
+                      <p className="text-gray-600 mt-2">
+                        {isSearching ? (
+                          <span className="flex items-center gap-2">
+                            <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity }}>
+                              <Loader size={16} />
+                            </motion.div>
+                            Filtering results...
+                          </span>
+                        ) : (
+                          <>
+                            {filteredOffers.length} offer{filteredOffers.length !== 1 ? 's' : ''} and {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''} found
+                          </>
+                        )}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2 text-red-600">
+                      <ChevronUp size={18} />
+                      <span className="font-semibold">Offers above</span>
+                      <ChevronDown size={18} />
+                      <span className="font-semibold">Products below</span>
+                    </div>
+                  </div>
+
+                  {isSearching ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                      {[1, 2, 3, 4].map((i) => (
+                        <motion.div
+                          key={i}
+                          animate={{ opacity: [0.5, 1, 0.5] }}
+                          transition={{ duration: 1.5, repeat: Infinity }}
+                          className="h-64 bg-gray-200 rounded-lg"
+                        />
+                      ))}
+                    </div>
+                  ) : filteredOffers.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                      {filteredOffers.map((offer) => (
+                        <SpotlightCard key={offer.id} offer={offer} />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="rounded-3xl border border-dashed border-red-300 bg-red-50 p-8 text-center">
+                      <p className="text-red-700 font-semibold">No matching offers found for "{searchTerm}".</p>
+                    </div>
+                  )}
+
+                  {!isSearching && (
+                    <div className="mt-10 flex items-center justify-center gap-3 text-gray-600">
+                      <ChevronDown size={20} />
+                      <span className="font-semibold">Matched products</span>
+                      <ChevronDown size={20} />
+                    </div>
+                  )}
+                </motion.div>
+              )}
+
+              {/* Category Filter */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                className="flex flex-wrap gap-3 justify-center mb-12"
+              >
+                {categories.map((category) => (
+                  <motion.button
+                    key={category}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setSelectedCategory(category)}
+                    className={`px-5 py-2 rounded-full font-semibold transition-all ${selectedCategory === category
+                      ? 'bg-red-600 text-white shadow-lg'
+                      : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                      }`}
+                  >
+                    {category}
+                  </motion.button>
+                ))}
+              </motion.div>
+
+              {/* Products Grid */}
+              {isSearching ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                    <motion.div
+                      key={i}
+                      animate={{ opacity: [0.5, 1, 0.5] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                      className="h-80 bg-gray-200 rounded-lg"
+                    />
                   ))}
                 </div>
               ) : (
-                <div className="rounded-3xl border border-dashed border-red-300 bg-red-50 p-8 text-center">
-                  <p className="text-red-700 font-semibold">No matching offers found for "{searchTerm}".</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  <AnimatePresence mode="wait">
+                    {filteredProducts.map((product) => (
+                      <ProductCard key={product.id} product={product} />
+                    ))}
+                  </AnimatePresence>
                 </div>
               )}
 
-              <div className="mt-10 flex items-center justify-center gap-3 text-gray-600">
-                <ChevronDown size={20} />
-                <span className="font-semibold">Matched products</span>
-                <ChevronDown size={20} />
-              </div>
-            </div>
-          )}
-
-          {/* Category Filter */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="flex flex-wrap gap-3 justify-center mb-12"
-          >
-            {categories.map((category) => (
-              <motion.button
-                key={category}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-5 py-2 rounded-full font-semibold transition-all ${selectedCategory === category
-                  ? 'bg-red-600 text-white shadow-lg'
-                  : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-                  }`}
-              >
-                {category}
-              </motion.button>
-            ))}
-          </motion.div>
-
-          {/* Products Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            <AnimatePresence mode="wait">
-              {filteredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </AnimatePresence>
-          </div>
-
-          {filteredProducts.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-gray-600 text-lg">No products found. Try a different search or category.</p>
-            </div>
+              {!isSearching && filteredProducts.length === 0 && (
+                <div className="text-center py-12">
+                  <p className="text-gray-600 text-lg">No products found. Try a different search or category.</p>
+                </div>
+              )}
+            </>
           )}
         </div>
       </section>
