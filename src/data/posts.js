@@ -1,3 +1,9 @@
+import mugImage from '../../img/gift/mug.jpg';
+import visitingImage from '../../img/print/visiting.png';
+import spiralImage from '../../img/xerox/Spiral.png';
+import penImage from '../../img/gift/pen.png';
+import flexImage from '../../img/print/flex.jpg';
+
 export const blogPosts = [
   {
     id: 1,
@@ -52,7 +58,7 @@ Contact us today at +91 93209 99385 or visit our store in Dahisar West to discus
     `,
     keywords: ["custom mugs", "corporate gifting", "mug printing", "dahisar west", "mumbai printing"],
     readTime: 5,
-    image: "/img/gift/mug.jpg"
+    image: mugImage
   },
   {
     id: 2,
@@ -117,7 +123,7 @@ Contact Avani Jumbo Xerox & Stationery today for professional business card desi
     `,
     keywords: ["business cards", "printing services", "mumbai", "dahisar west", "corporate stationery"],
     readTime: 6,
-    image: "/img/print/visiting.png"
+    image: visitingImage
   },
   {
     id: 3,
@@ -199,7 +205,7 @@ We serve students from all Mumbai universities and colleges. Contact us today fo
     `,
     keywords: ["thesis printing", "binding services", "mumbai universities", "dissertation printing", "student services"],
     readTime: 7,
-    image: "/img/xerox/Spiral.png"
+    image: spiralImage
   },
   {
     id: 4,
@@ -291,7 +297,7 @@ We offer free consultation and design services for all corporate gifting require
     `,
     keywords: ["corporate gifting", "business gifts", "mumbai", "customized gifts", "employee appreciation"],
     readTime: 6,
-    image: "/img/gift/pen.png"
+    image: penImage
   },
   {
     id: 5,
@@ -389,8 +395,22 @@ Get professional flex printing services for all your outdoor advertising needs i
     `,
     keywords: ["flex printing", "outdoor advertising", "banners", "mumbai", "signage"],
     readTime: 8,
-    image: "/img/print/flex.jpg"
+    image: flexImage
   }
 ];
+
+const createSlug = (title) =>
+  title
+    .toLowerCase()
+    .trim()
+    .replace(/&/g, 'and')
+    .replace(/[^\w\s-]+/g, '')
+    .replace(/[\s_]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+blogPosts.forEach((post) => {
+  post.slug = createSlug(post.title);
+});
 
 export default blogPosts;

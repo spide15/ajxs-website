@@ -47,7 +47,7 @@ const BlogList = () => {
               <article
                 key={post.id}
                 className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all cursor-pointer"
-                onClick={() => navigate(`/blog/${post.id}`)}
+                onClick={() => navigate(`/blog/${post.slug}`)}
               >
                 <div className="relative h-56 bg-gray-100 overflow-hidden">
                   <img

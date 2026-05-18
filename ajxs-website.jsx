@@ -494,6 +494,20 @@ export default function AJXSWebsite() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Handle GitHub Pages 404 redirect fallback for BrowserRouter
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const redirectPath = params.get('redirect');
+
+    if (redirectPath && redirectPath.startsWith('/')) {
+      params.delete('redirect');
+      const remainingSearch = params.toString();
+      const cleanedSearch = remainingSearch ? `?${remainingSearch}` : '';
+      window.history.replaceState({}, '', `/${cleanedSearch}`);
+      navigate(redirectPath, { replace: true });
+    }
+  }, [navigate]);
+
   // Debounced search function
   const debouncedSearch = useCallback((value) => {
     if (debounceTimer.current) {
@@ -705,13 +719,13 @@ export default function AJXSWebsite() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="#offers"
+              href="/#offers"
               className="bg-white text-red-600 px-8 py-4 rounded-lg font-bold hover:bg-gray-100 transition-colors flex items-center justify-center gap-2"
             >
               🎁 See Current Offers
             </a>
             <a
-              href="#services"
+              href="/#services"
               className="bg-red-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-red-700 transition-colors flex items-center justify-center gap-2"
             >
               🛍️ Explore Services
@@ -940,7 +954,7 @@ export default function AJXSWebsite() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all cursor-pointer"
-                onClick={() => navigate(`/blog/${post.id}`)}
+                onClick={() => navigate(`/blog/${post.slug}`)}
               >
                 <div className="relative h-48 overflow-hidden bg-gray-200">
                   <img
@@ -1153,18 +1167,18 @@ export default function AJXSWebsite() {
             <div>
               <h4 className="font-bold text-white mb-4">Quick Links</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#home" className="hover:text-cyan-400 transition-colors">Home</a></li>
-                <li><a href="#services" className="hover:text-cyan-400 transition-colors">Services</a></li>
-                <li><a href="#blog" className="hover:text-cyan-400 transition-colors">Blog</a></li>
-                <li><a href="#contact" className="hover:text-cyan-400 transition-colors">Contact</a></li>
+                <li><a href="/#home" className="hover:text-cyan-400 transition-colors">Home</a></li>
+                <li><a href="/#services" className="hover:text-cyan-400 transition-colors">Services</a></li>
+                <li><a href="/#blog" className="hover:text-cyan-400 transition-colors">Blog</a></li>
+                <li><a href="/#contact" className="hover:text-cyan-400 transition-colors">Contact</a></li>
               </ul>
             </div>
             <div>
               <h4 className="font-bold text-white mb-4">Services</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#services" className="hover:text-cyan-400 transition-colors">Printing</a></li>
-                <li><a href="#services" className="hover:text-cyan-400 transition-colors">Customization</a></li>
-                <li><a href="#services" className="hover:text-cyan-400 transition-colors">Gifting</a></li>
+                <li><a href="/#services" className="hover:text-cyan-400 transition-colors">Printing</a></li>
+                <li><a href="/#services" className="hover:text-cyan-400 transition-colors">Customization</a></li>
+                <li><a href="/#services" className="hover:text-cyan-400 transition-colors">Gifting</a></li>
               </ul>
             </div>
             <div>

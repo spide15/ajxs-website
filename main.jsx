@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { HashRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import AJXSWebsite from './ajxs-website.jsx'
 import BlogList from './src/components/BlogList.jsx'
@@ -10,13 +10,14 @@ import './index.css'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <HelmetProvider>
-      <HashRouter>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<AJXSWebsite />} />
           <Route path="/blog" element={<BlogList />} />
-          <Route path="/blog/:id" element={<PostPage />} />
+          <Route path="/blog/:slug" element={<PostPage />} />
+          <Route path="*" element={<AJXSWebsite />} />
         </Routes>
-      </HashRouter>
+      </BrowserRouter>
     </HelmetProvider>
   </React.StrictMode>,
 )

@@ -5,9 +5,11 @@ import { ArrowLeft, MessageCircle, Twitter } from 'lucide-react';
 import { blogPosts } from '../data/posts.js';
 
 const PostPage = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate();
-  const post = blogPosts.find(p => p.id === parseInt(id));
+  const post = blogPosts.find(
+    (p) => p.slug === slug || p.id === parseInt(slug, 10)
+  );
 
   if (!post) {
     return (
