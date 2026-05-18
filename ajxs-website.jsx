@@ -1,6 +1,10 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Search, MapPin, Phone, Mail, MessageCircle, Star, Clock, ChevronDown, ChevronUp, Menu, X, Youtube, Instagram, Plus, Loader } from 'lucide-react';
+
+// Import blog data
+import { blogPosts } from './src/data/posts.js';
 
 
 
@@ -471,6 +475,7 @@ const SpotlightCard = ({ offer }) => {
 
 // Main App Component
 export default function AJXSWebsite() {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [searchTerm, setSearchTerm] = useState('');
   const [searchInput, setSearchInput] = useState('');
@@ -559,7 +564,7 @@ export default function AJXSWebsite() {
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex gap-6">
-            {['Home', 'Services', 'Offers', 'Contact'].map((item) => (
+            {['Home', 'Services', 'Blog', 'Offers', 'Contact'].map((item) => (
               <a
                 key={item}
                 href={`#${item.toLowerCase()}`}
@@ -647,7 +652,7 @@ export default function AJXSWebsite() {
               exit={{ opacity: 0, height: 0 }}
               className="md:hidden bg-gray-50 border-t flex flex-col"
             >
-              {['Home', 'Services', 'Offers', 'Contact'].map((item) => (
+              {['Home', 'Services', 'Blog', 'Offers', 'Contact'].map((item) => (
                 <a
                   key={item}
                   href={`#${item.toLowerCase()}`}
@@ -912,6 +917,122 @@ export default function AJXSWebsite() {
         </div>
       </section>
 
+      {/* Blog Section */}
+      <section id="blog" className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+              📚 Printing & Gifting Insights
+            </h2>
+            <p className="text-gray-600 text-lg">
+              Expert tips, trends, and guides to make the most of our services
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {blogPosts.slice(0, 3).map((post) => (
+              <motion.article
+                key={post.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all cursor-pointer"
+                onClick={() => navigate(`/blog/${post.id}`)}
+              >
+                <div className="relative h-48 overflow-hidden bg-gray-200">
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
+                    BLOG
+                  </div>
+                </div>
+
+                <div className="p-6 flex flex-col h-full">
+                  <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
+                    <time dateTime={post.date}>
+                      {new Date(post.date).toLocaleDateString('en-IN', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                    </time>
+                    <span>{post.readTime} min read</span>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-gray-800 mb-3 line-clamp-2 hover:text-red-600 transition-colors">
+                    {post.title}
+                  </h3>
+
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">
+                    {post.excerpt}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {post.keywords.slice(0, 2).map((keyword, index) => (
+                      <span
+                        key={index}
+                        className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded"
+                      >
+                        #{keyword}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors text-center">
+                    Read More →
+                  </div>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+
+          {blogPosts.length > 3 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="text-center"
+            >
+              <button
+                onClick={() => navigate('/blog')}
+                className="bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 text-white font-bold py-3 px-8 rounded-lg transition-all inline-flex items-center gap-2"
+              >
+                📖 Read All Articles
+              </button>
+            </motion.div>
+          )}
+
+          {/* Newsletter Signup */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="mt-16 bg-gradient-to-r from-red-50 to-orange-50 border-2 border-red-200 rounded-lg p-8 text-center"
+          >
+            <h3 className="text-2xl font-bold text-gray-800 mb-3">
+              ✉️ Stay Updated with Latest Tips & Trends
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Subscribe to get exclusive insights on printing, customization, and gifting delivered to your inbox.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+              <input
+                type="email"
+                placeholder="Enter your email..."
+                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:border-red-600 outline-none transition-colors"
+              />
+              <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors whitespace-nowrap">
+                Subscribe
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Contact Section */}
       <section id="contact" className="py-20 px-4 bg-gradient-to-r from-slate-900 to-slate-800 text-white">
         <div className="max-w-7xl mx-auto">
@@ -1034,6 +1155,7 @@ export default function AJXSWebsite() {
               <ul className="space-y-2 text-sm">
                 <li><a href="#home" className="hover:text-cyan-400 transition-colors">Home</a></li>
                 <li><a href="#services" className="hover:text-cyan-400 transition-colors">Services</a></li>
+                <li><a href="#blog" className="hover:text-cyan-400 transition-colors">Blog</a></li>
                 <li><a href="#contact" className="hover:text-cyan-400 transition-colors">Contact</a></li>
               </ul>
             </div>
