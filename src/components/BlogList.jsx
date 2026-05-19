@@ -48,16 +48,14 @@ const BlogList = () => {
                 key={post.id}
                 className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all cursor-pointer"
                 onClick={() => navigate(`/blog/${post.slug}`)}
-              >
-                <div className="relative h-56 bg-gray-100 overflow-hidden">
+              >                <div className="relative h-40 sm:h-48 md:h-56 overflow-hidden bg-gray-200 flex items-center justify-center">
                   <img
                     src={post.image}
                     alt={post.title}
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                    className="w-full h-full object-contain transition-transform duration-300 hover:scale-105"
                   />
                 </div>
-
-                <div className="p-6 flex flex-col h-full">
+                  <div className="p-6 flex flex-col h-full">
                   <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
                     <time dateTime={post.date}>
                       {new Date(post.date).toLocaleDateString('en-IN', {

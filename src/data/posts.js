@@ -1,8 +1,9 @@
-import mugImage from '../../img/gift/mug.jpg';
-import visitingImage from '../../img/print/visiting.png';
-import spiralImage from '../../img/xerox/Spiral.png';
-import penImage from '../../img/gift/pen.png';
-import flexImage from '../../img/print/flex.jpg';
+// Blog images with date-based naming (stored in img/blog/ folder)
+import blogImage20240515 from '../../img/blog/2024-05-15.png';
+import blogImage20240513 from '../../img/blog/2024-05-13.png';
+import blogImage20240511 from '../../img/blog/2024-05-11.png';
+import blogImage20240509 from '../../img/blog/2024-05-09.png';
+import blogImage20240507 from '../../img/blog/2024-05-07.png';
 
 export const blogPosts = [
   {
@@ -58,7 +59,7 @@ Contact us today at +91 93209 99385 or visit our store in Dahisar West to discus
     `,
     keywords: ["custom mugs", "corporate gifting", "mug printing", "dahisar west", "mumbai printing"],
     readTime: 5,
-    image: mugImage
+    image: blogImage20240515
   },
   {
     id: 2,
@@ -123,7 +124,7 @@ Contact Avani Jumbo Xerox & Stationery today for professional business card desi
     `,
     keywords: ["business cards", "printing services", "mumbai", "dahisar west", "corporate stationery"],
     readTime: 6,
-    image: visitingImage
+    image: blogImage20240513
   },
   {
     id: 3,
@@ -205,7 +206,7 @@ We serve students from all Mumbai universities and colleges. Contact us today fo
     `,
     keywords: ["thesis printing", "binding services", "mumbai universities", "dissertation printing", "student services"],
     readTime: 7,
-    image: spiralImage
+    image: blogImage20240511
   },
   {
     id: 4,
@@ -297,7 +298,7 @@ We offer free consultation and design services for all corporate gifting require
     `,
     keywords: ["corporate gifting", "business gifts", "mumbai", "customized gifts", "employee appreciation"],
     readTime: 6,
-    image: penImage
+    image: blogImage20240509
   },
   {
     id: 5,
@@ -395,7 +396,7 @@ Get professional flex printing services for all your outdoor advertising needs i
     `,
     keywords: ["flex printing", "outdoor advertising", "banners", "mumbai", "signage"],
     readTime: 8,
-    image: flexImage
+    image: blogImage20240507
   }
 ];
 

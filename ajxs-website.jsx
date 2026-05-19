@@ -956,11 +956,11 @@ export default function AJXSWebsite() {
                 className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all cursor-pointer"
                 onClick={() => navigate(`/blog/${post.slug}`)}
               >
-                <div className="relative h-48 overflow-hidden bg-gray-200">
+                <div className="relative  overflow-hidden bg-gray-200">
                   <img
                     src={post.image}
                     alt={post.title}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                   />
                   <div className="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
                     BLOG
